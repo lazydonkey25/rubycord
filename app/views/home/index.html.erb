@@ -1,0 +1,61 @@
+<!--Author: Ruby Reynolds
+Date: like 2/17/24 ish
+Purpose: just a girl coding for fun uwu -->
+
+
+<%# TODO:
+- Make the bubbles look good cause they are basic asf
+- Make the top bar show convo name Ruby!
+- Improve overall aesthetics girlypop
+- Learn and handle backend later cause you don't know what you're doing lmfao
+- Add a conversation screen because its not much of a texting app without
+%>
+
+
+<div id="top-bar">
+  <i class="fas fa-bars" id></i> 
+  <h3 id="convo">Start a conversation now!</h3>
+
+  <%= button_to 'Logout', logout_path, method: :delete, id: "logout" %>
+
+  <%= link_to '/register', id: "signup" do %>
+    <button>Sign Up!</button>
+  <% end %>
+</div>
+
+<div id="side-bar">
+  <p>etc etc</p>
+  <div id="conversation">
+    <%= form_for @conversation, url: {action: "create"} do |f|%>
+      <%= f.label :title, 'Username' %>
+      <%= f.text_field :title %>
+      <%= f.submit "Start Conversation" %>
+    <% end %>
+  </div>
+</div>
+
+<div>
+  <% if @conversations && @conversations.empty? %>
+    <p>No conversations yet!</p>
+  <% elsif @conversations %>
+  <% @conversations.each do |conversation| %>
+    <div id="conversation-<%= conversation.id %>">
+      <h2><%= conversation.title %></h2>
+      <% conversation.messages.each do |message| %>
+      <p><%= message.content %></p>
+    <% end %>
+    <% end %>
+  </div>
+<% end %>
+</div>
+
+<div id="chat-window">
+  <div id="text-bubble" style="display: none;">
+    <p>Hi, I'm a text bubble</p> 
+  </div>
+
+  <div class="message-bar">
+    <input type="text" placeholder="Type a message..." id="text">
+    <button id="send">Send</button>
+  </div>
+</div>
